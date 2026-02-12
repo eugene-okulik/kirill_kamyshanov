@@ -6,5 +6,3 @@ arithmetic_av = (x + y) / 2
 geometric_av = (x * y) ** 0.5
 print(arithmetic_av)
 print(geometric_av)
-
-
