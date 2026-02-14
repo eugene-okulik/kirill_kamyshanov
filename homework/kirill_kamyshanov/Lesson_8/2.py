@@ -8,7 +8,7 @@ def fibonacci_genetator(index=10000000):
     n2 = 1
     pos = 0
     while pos < index:
-        if pos in [0]:
+        if pos == 0:
             yield 1
         else:
             n1, n2 = n2, n1 + n2
