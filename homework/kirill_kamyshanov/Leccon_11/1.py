@@ -38,15 +38,15 @@ class Textbooks(Book):
 
 
 textbook1 = Textbooks('Обществознание для чайников', 'Е. Огурцов', '367', '6428',
-                      False,'Обществознание', '6', True)
+                      False, 'Обществознание', '6', True)
 textbook2 = Textbooks('Занимательная математика', 'Д. Цифров', '791', '9410',
-                      False,'Математика', '2', True)
+                      False, 'Математика', '2', True)
 textbook3 = Textbooks('История России (862-1480гг.)', 'Я. Иванов', '334', '7899',
-                      False,'История', '5', False)
+                      False, 'История', '5', False)
 textbook4 = Textbooks('How are you doing?', 'К. Степанов', '231', '1152',
-                      False,'Английский язык', '3', True)
+                      False, 'Английский язык', '3', True)
 textbook5 = Textbooks('Основы физики. Как стать поумнее', 'Э. Дроздов', '240', '8800',
-                      False,'Физика', '7', True)
+                      False, 'Физика', '7', True)
 
 textbook3.is_reserved = True
 
