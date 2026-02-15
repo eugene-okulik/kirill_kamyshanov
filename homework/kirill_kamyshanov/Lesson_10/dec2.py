@@ -12,7 +12,7 @@ def mult(a, b):
     print(a * b)
 
 
-mult(2, 3, count = 4)
+mult(2, 3, count=4)
 
 
 def count(count):
