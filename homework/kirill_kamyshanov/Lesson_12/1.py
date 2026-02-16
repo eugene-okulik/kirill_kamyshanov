@@ -1,5 +1,6 @@
 class Flower:
     stem_color = 'green'
+
     def __repr__(self):
         return f'{self.name}. Цена: {self.price}, срок жизни: {self.lifetime}'
 
@@ -62,7 +63,7 @@ class BunchOfFlowers:
             return
         for flower in self.flowers:
             if not (hasattr(flower, attr)):
-                print (f'Атрибут {attr} есть не у всех цветов')
+                print(f'Атрибут {attr} есть не у всех цветов')
                 return
         sorted_flowers = sorted(self.flowers, key=lambda f: getattr(f, attr))
         print(f'Сортировка по {attr}:')
