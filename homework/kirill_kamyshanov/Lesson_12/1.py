@@ -1,38 +1,34 @@
 class Flower:
     stem_color = 'green'
 
+    def __init__(self, lifetime, stem_length, freshness, color):
+        self.lifetime = lifetime
+        self.stem_length = stem_length
+        self.freshness = freshness
+        self.color = color
     def __repr__(self):
         return f'{self.name}. Цена: {self.price}, срок жизни: {self.lifetime}'
 
 
 class Tulip(Flower):
-    def __init__(self):
+    def __init__(self, lifetime, stem_length, freshness, color):
+        super().__init__(lifetime, stem_length, freshness, color)
         self.name = 'Тюльпан'
-        self.lifetime = 14
         self.price = 150
-        self.stem_length = 18
-        self.freshness = 3
-        self.color = 'red'
 
 
 class Chamomile(Flower):
-    def __init__(self):
+    def __init__(self, lifetime, stem_length, freshness, color):
+        super().__init__(lifetime, stem_length, freshness, color)
         self.name = 'Ромашка'
-        self.lifetime = 10
         self.price = 40
-        self.stem_length = 7
-        self.freshness = 1
-        self.color = 'yellow'
 
 
 class Orchid(Flower):
-    def __init__(self):
+    def __init__(self, lifetime, stem_length, freshness, color):
+        super().__init__(lifetime, stem_length, freshness, color)
         self.name = 'Орхидея'
-        self.lifetime = 30
         self.price = 250
-        self.stem_length = 20
-        self.freshness = 2
-        self.color = 'pink'
 
 
 class BunchOfFlowers:
@@ -72,11 +68,11 @@ class BunchOfFlowers:
         return
 
 
-tulip1 = Tulip()
-tulip2 = Tulip()
-cham1 = Chamomile()
-cham2 = Chamomile()
-orchid1 = Orchid()
-orchid2 = Orchid()
+tulip1 = Tulip(20, 15, 6, 'red')
+tulip2 = Tulip(18, 19, 5, 'blue')
+cham1 = Chamomile(10, 9, 4, 'yellow')
+cham2 = Chamomile(11, 11, 3, 'white')
+orchid1 = Orchid(39, 25, 2, 'scarlet')
+orchid2 = Orchid(35, 29, 1, 'pink')
 
 bunch1 = BunchOfFlowers('Первый букет', tulip1, tulip2, cham2, orchid1, orchid2)
