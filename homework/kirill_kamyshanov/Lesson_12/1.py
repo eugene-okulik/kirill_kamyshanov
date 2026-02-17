@@ -6,6 +6,7 @@ class Flower:
         self.stem_length = stem_length
         self.freshness = freshness
         self.color = color
+
     def __repr__(self):
         return f'{self.name}. Цена: {self.price}, срок жизни: {self.lifetime}'
 
