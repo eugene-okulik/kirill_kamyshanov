@@ -16,22 +16,76 @@ student_id = cursor.lastrowid
 print(f'student_id: {student_id}') # убрать перед сдачей
 
 # 2 Создайте несколько книг (books) и укажите, что ваш созданный студент взял их
-insert_pattern = "INSERT INTO books (title, taken_by_student_id) VALUES (%s, %s)"
-cursor.executemany(insert_pattern, [
+query = "INSERT INTO books (title, taken_by_student_id) VALUES (%s, %s)"
+cursor.executemany(query, [
     ('Как устроена экономика', student_id),
     ('Заповедники России', student_id),
     ('Основы геометрии', student_id)
 ])
+book_id1 = cursor.lastrowid
+book_id2 = book_id1 - 1
+book_id3 = book_id1 - 2
+print(f'айди книг добавлены криво. book_id1: {book_id1}, book_id2: {book_id2}, book_id3: {book_id3}')
 
 # 3 Создайте группу (group) и определите своего студента туда
 cursor.execute("INSERT INTO `groups` (title, start_date, end_date) VALUES ('6Б', 'сентябрь 25', 'июнь 26')")
 group_id = cursor.lastrowid
-print(group_id) # убрать перед сдачей
+print(f'group_id: {group_id}') # убрать перед сдачей
 query = "UPDATE students SET group_id = %s WHERE id = %s"
 cursor.execute(query, (group_id, student_id))
 
+# 4 Создайте несколько учебных предметов (subjects)
+subjects = ['Алгебра', 'Английский язык', 'Информатика']
+subject_ids =[]
+for subject in subjects:
+    cursor.execute("INSERT INTO subjects (title) VALUES (%s)", (subject,))
+    subject_ids.append(cursor.lastrowid)
+subject1, subject2, subject3 = subject_ids
+print(f'subject1: {subject1}, subject2: {subject2}, subject3: {subject3}')
 
-db.close()
+
+# 5 Создайте по два занятия для каждого предмета (lessons)
+lessons = ['Теорема Пифагора', 'Квадратные уравнения', 'Прошедшие времена в английском',
+           'Разговорная практика', 'Системы счисления', 'Основы веб-вёрстки']
+lesson_ids = []
+query = "INSERT INTO lessons (title, subject_id) VALUES (%s, %s)"
+
+for subject in subject_ids:
+    for lesson in lessons:
+        # for count in range(2):
+            cursor.execute(query, (lesson, subject))
+            print(f'lesson: {lesson}, subject: {subject}')
+
+
+
+
+
+# query = "INSERT INTO lessons (title, subject_id) VALUES (%s, %s)"
+# cursor.executemany(query, [
+#     ('Теорема Пифагора', subject1),
+#     ('Квадратные уравнения', subject1),
+#     ('Прошедшие времена в английском', subject2),
+#     ('Разговорная практика', subject2),
+#     ('Системы счисления', subject3),
+#     ('Основы веб-вёрстки', subject3)
+# ])
+# print('Лессоны не занесены в айдишники')
+
+
+# 6 Поставьте своему студенту оценки (marks) для всех созданных вами занятий
+
+
+
+# query = "INSERT INTO marks (value, lesson_id, student_id) VALUES (2, 74773, 22289)"
+# INSERT INTO marks (value, lesson_id, student_id) VALUES (2, 74773, 22289)
+# INSERT INTO marks (value, lesson_id, student_id) VALUES (5, 74774, 22289)
+# INSERT INTO marks (value, lesson_id, student_id) VALUES (5, 74775, 22289)
+# INSERT INTO marks (value, lesson_id, student_id) VALUES (4, 74776, 22289)
+# INSERT INTO marks (value, lesson_id, student_id) VALUES (3, 74777, 22289)
+# INSERT INTO marks (value, lesson_id, student_id) VALUES (5, 74778, 22289)
+
+
+db.close() # не забыть добавить коммит
 
 # Важно: никакие id не хардкодить!
 # Все нужные вашей программе id нужно сохранять в переменные сразу после добавления данных в базу
