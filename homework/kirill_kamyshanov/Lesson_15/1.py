@@ -17,11 +17,9 @@ student_id = cursor.lastrowid
 
 # 2 Создайте несколько книг (books) и укажите, что ваш созданный студент взял их
 query = "INSERT INTO books (title, taken_by_student_id) VALUES (%s, %s)"
-books_titles = ['Как устроена экономика', 'Заповедники России', 'Основы геометрии']
-books_ids = []
-for book in books_titles:
-    cursor.execute(query, (book, student_id))
-    books_ids.append(cursor.lastrowid)
+book_titles = ['Как устроена экономика', 'Заповедники России', 'Основы геометрии']
+book_data = [(book_title, student_id) for book_title in book_titles]
+cursor.executemany(query, book_data)
 
 # 3 Создайте группу (group) и определите своего студента туда
 cursor.execute("INSERT INTO `groups` (title, start_date, end_date) VALUES ('6Б', 'сентябрь 25', 'июнь 26')")
@@ -51,10 +49,8 @@ for lesson in lessons:
 
 # 6 Поставьте своему студенту оценки (marks) для всех созданных вами занятий
 query = "INSERT INTO marks (value, lesson_id, student_id) VALUES (%s, %s, %s)"
-marks_ids = []
-for lesson in lesson_ids:
-    cursor.execute(query, (random.randrange(2, 5), lesson, student_id))
-    marks_ids.append(cursor.lastrowid)
+marks_data = [(random.randrange(2, 5), lesson_id, student_id) for lesson_id in lesson_ids]
+cursor.executemany(query, marks_data)
 
 # Получите информацию из базы данных:
 # 1 Все оценки студента
