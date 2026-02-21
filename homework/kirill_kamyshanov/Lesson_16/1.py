@@ -41,8 +41,7 @@ JOIN subjects subj ON subj.id = l.subject_id
 
 def read_db():
     cursor.execute(query)
-    response = cursor.fetchall()
-    for line in response:
+    for line in cursor:
         yield line
 
 
