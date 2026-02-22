@@ -21,12 +21,19 @@ def read_and_split_file(path):
         return entries
 
 
+
+
 def show_context(target_log, text):
-    pos = target_log.find(text)
-    start = max(0, pos - 50)
-    end = min(len(target_log), pos + 50)
-    context = target_log[start:end]
-    print(f'Контекст: ...{context}...')
+    target_log = target_log.split()
+    text = text.split()
+    big_len = len(target_log)
+    small_len = len(text)
+    for i in range(big_len):
+        if target_log[i: i + small_len] == text:
+            start = max(0, i - 5)
+            end = min(big_len , i + small_len + 5)
+            context = ' '.join(target_log[start: end])
+            print(f'Контекст: ...{context}...')
 
 
 def check_date(file_name, logs_list):
@@ -37,7 +44,7 @@ def check_date(file_name, logs_list):
             if date == log_time.replace(second=0, microsecond=0):
                 if args.text in value:
                     print(f'Совпадение в файле {file_name}')
-                    print(f'Совпадение в логе {index}')
+                    print(f'Совпадение в логе №{index}')
                     print(f'Время: {log_time}')
                     show_context(value, args.text)
                     print('-' * 50)
@@ -47,7 +54,10 @@ def check_date(file_name, logs_list):
 def search_match_file(file_name, logs_list):
     for index, value in enumerate(logs_list, start=1):
         if not args.text:
-            print(value)
+            for index, value in enumerate(logs_list, start=1):
+                print(f'Лог номер {index}')
+                print(value)
+                print('-' * 100)
             return
         if args.date:
             return check_date(file_name, logs_list)
@@ -77,20 +87,19 @@ else:
     search_match_file(args.file, data)
 
 
-# контекст по символам, а не пл словам
+# Доработки:
 # не оптимизирован код
 # поиск по логам верно ли??
-
-# Также, программа должна вывести кусок ошибки, где был найден текст:
-# 5 слов до найденного слова, найденное слово, 5 слов после найденного слова.
-
 
 
 
 # команда с папкой и файлом для отладки
 # python mad_logsearcher.py C:\Users\1\education\okulik_course\kirill_kamyshanov\homework\ # негативный тест. другая папка
-# python mad_logsearcher.py rpe-api-error.2022-02-03.3.log
 
+# файл
+# python mad_logsearcher.py rpe-api-error.2022-02-03.3.log
+# папка
+# python mad_logsearcher.py C:\Users\1\education\okulik_course\kirill_kamyshanov\homework\eugene_okulik\data\logs
 # файл, текст, дата
 # python mad_logsearcher.py rpe-api-error.2022-02-03.3.log --text="Sql query answer" --date="2022-02-03 06:49"
 # файл, текст
