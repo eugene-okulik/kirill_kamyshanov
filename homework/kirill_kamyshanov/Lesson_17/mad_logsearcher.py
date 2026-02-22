@@ -36,37 +36,40 @@ def show_context(target_log, text):
             print(f'Контекст: ...{context}...')
 
 
-def check_date(file_name, logs_list):
-    for index, value in enumerate(logs_list, start=1):
-        if args.date:
-            date = datetime.datetime.strptime(args.date, "%Y-%m-%d %H:%M")
-            log_time = datetime.datetime.strptime(value[:23], "%Y-%m-%d %H:%M:%S.%f")
-            if date == log_time.replace(second=0, microsecond=0):
-                if args.text in value:
-                    print(f'Совпадение в файле {file_name}')
-                    print(f'Совпадение в логе №{index}')
-                    print(f'Время: {log_time}')
-                    show_context(value, args.text)
-                    print('-' * 50)
-    return
+def check_date(date, value): # проверим функцию. удалить если не надо
+    date = datetime.datetime.strptime(date, "%Y-%m-%d %H:%M")
+    log_time = datetime.datetime.strptime(value[:23], "%Y-%m-%d %H:%M:%S.%f")
+    if date == log_time.replace(second=0, microsecond=0):
+        return True
 
 
 def search_match_file(file_name, logs_list):
     for index, value in enumerate(logs_list, start=1):
-        if not args.text:
-            for index, value in enumerate(logs_list, start=1):
-                print(f'Лог номер {index}')
-                print(value)
-                print('-' * 100)
-            return
-        if args.date:
-            return check_date(file_name, logs_list)
-        if args.text in value:
-            print(f'Совпадение в файле {file_name}')
-            print(f'Совпадение в логе {index}')
+        log_time = datetime.datetime.strptime(value[:23], "%Y-%m-%d %H:%M:%S.%f")
+        start = f'Совпадение в файле {file_name}\nСовпадение в логе №{index}'
+        end = '-' * 100
+
+        if not args.text and not args.date: # нет текста и даты
+            print(f'Лог номер {index}')
+            print(value)
+            print(end)
+
+        elif args.date: #  дата есть
+            if check_date( args.date, value):
+                print(start)
+                print(f'Время: {log_time}')
+                if args.text is not None and args.date in value: # дата и текст или только дата
+                    show_context(value, args.text)
+                print(end)
+
+        elif args.text in value and not args.date:  # только текст
+            print(start)
             print(f'Время: {value[:23]}')
             show_context(value, args.text)
-            print('-' * 50)
+            print(end)
+
+
+
 
 
 
@@ -98,14 +101,19 @@ else:
 
 # файл
 # python mad_logsearcher.py rpe-api-error.2022-02-03.3.log
-# папка
-# python mad_logsearcher.py C:\Users\1\education\okulik_course\kirill_kamyshanov\homework\eugene_okulik\data\logs
-# файл, текст, дата
-# python mad_logsearcher.py rpe-api-error.2022-02-03.3.log --text="Sql query answer" --date="2022-02-03 06:49"
+# файл, дата
+# python mad_logsearcher.py rpe-api-error.2022-02-03.3.log --date="2022-02-03 06:49"
 # файл, текст
 # python mad_logsearcher.py rpe-api-error.2022-02-03.3.log --text="Sql query answer"
+# файл, текст, дата
+# python mad_logsearcher.py rpe-api-error.2022-02-03.3.log --text="Sql query answer" --date="2022-02-03 06:49"
+
+# папка
+# python mad_logsearcher.py C:\Users\1\education\okulik_course\kirill_kamyshanov\homework\eugene_okulik\data\logs
 # папка, текст
 # python mad_logsearcher.py C:\Users\1\education\okulik_course\kirill_kamyshanov\homework\eugene_okulik\data\logs --text="Sql query answer"
+# папка, дата
+# python mad_logsearcher.py C:\Users\1\education\okulik_course\kirill_kamyshanov\homework\eugene_okulik\data\logs  --date="2022-02-03 06:49"
 # папка, текст, дата
 # python mad_logsearcher.py C:\Users\1\education\okulik_course\kirill_kamyshanov\homework\eugene_okulik\data\logs --text="Sql query answer" --date="2022-02-03 06:49"
 
