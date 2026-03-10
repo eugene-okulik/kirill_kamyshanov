@@ -3,7 +3,7 @@ import requests
 
 # Служебная функция для удаления тестовых объектов
 def x_clear(object_id):
-    response = requests.delete(f'http://objapi.course.qa-practice.com/object/{object_id}')
+    requests.delete(f'http://objapi.course.qa-practice.com/object/{object_id}')
 
 
 # Служебная функция для создания тестовых объектов
