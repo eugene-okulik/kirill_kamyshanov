@@ -1,0 +1,2 @@
+class CreateObj:
+    url = ''
