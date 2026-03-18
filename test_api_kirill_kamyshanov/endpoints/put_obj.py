@@ -4,7 +4,7 @@ from test_api_kirill_kamyshanov.endpoints.endpoint import Endpoint
 
 class PutObj(Endpoint):
     def put_edit_object(self, body, id):
-        response = requests.put(f'http://objapi.course.qa-practice.com/object/{id}', json=body)
+        response = requests.put(f'{self.url}/{id}', json=body)
         self.status_code = response.status_code
         self.response_body = response.json()
         print(self.user_id)

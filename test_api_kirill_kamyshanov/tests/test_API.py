@@ -39,7 +39,6 @@ import pytest
 
 body1 = {"name": "Andrey", "data": {"feature": "value"}}
 
-# Чистовик
 def test_get_by_id_obj(create_object_endpoint, get_object_endpoint):
     user_id = create_object_endpoint.create_test_object(body1)
     get_object_endpoint.get_by_id_obj(user_id)
@@ -53,7 +52,6 @@ def test_get_by_id_obj(create_object_endpoint, get_object_endpoint):
 
 
 
-# чистовик
 # # Создание объектов
 @pytest.mark.parametrize("body", [
     ({"name": "Maria", "data": {"feature": "grape"}}),
@@ -73,14 +71,13 @@ def test_create_obj(create_object_endpoint, body):
 
 
 
-# Чистовик
 # Изменение объекта с помощью метода PUT
 def test_put_edit_obj(put_edit_object):
     body_put = {"name": "new_name_put",
             "data": {"feature": "new_value_put"}
             }
     user_id = put_edit_object.create_test_object(body1)
-    response_body = put_edit_object.put_edit_object(body_put, user_id)
+    put_edit_object.put_edit_object(body_put, user_id)
     put_edit_object.check_that_status_code_is_200()
     put_edit_object.check_response_body_fields()
     put_edit_object.check_name_field(body_put)
@@ -88,36 +85,42 @@ def test_put_edit_obj(put_edit_object):
     put_edit_object.check_id_field()
     put_edit_object.remove_test_object()
 
-# #
-#
-# # Изменение объекта с помощью метода PATCH
-# @pytest.mark.critical
-# def test_patch_edit_obj(setup_and_teardown):
-#     body1 = {"name": "new_name_patch"}
-#     body2 = {"data": {"feature": "new_value_patch"}}
-#
-#     response = requests.patch(f'http://objapi.course.qa-practice.com/object/{setup_and_teardown}', json=body1)
-#     response_body = response.json()
-#     assert response.status_code == 200, 'Status code is not 200'
-#     assert 'id' in response_body, 'Response body does not have an id'
-#     assert 'data' in response_body, 'Response body does not have a data'
-#     assert 'name' in response_body, 'Response body does not have a name'
-#     assert response_body['name'] == body1['name'], 'Name does not match'
-#
-#     response = requests.patch(f'http://objapi.course.qa-practice.com/object/{setup_and_teardown}', json=body2)
-#     response_body = response.json()
-#     assert response.status_code == 200, 'Status code is not 200'
-#     assert response_body['name'] == body1['name'], 'Name does not match'
-#     assert response_body['data'] == body2['data'], 'Data does not match'
-#
-#
+
+# Изменение объекта с помощью метода PATCH
+@pytest.mark.critical
+def test_patch_edit_obj(patch_edit_object):
+    body = {"name": "Andrey", "data": {"feature": "value"}}
+    body1 = {"name": "new_name_patch"}
+    body2 = {"data": {"feature": "new_value_patch"}}
+
+    user_id = patch_edit_object.create_test_object(body)
+
+    patch_edit_object.patch_edit_object(body1, user_id)
+    patch_edit_object.check_that_status_code_is_200()
+    patch_edit_object.check_presence_of_response_body()
+    patch_edit_object.check_response_body_fields()
+    patch_edit_object.check_name_field(body1)
+    patch_edit_object.check_id_field()
+
+
+    patch_edit_object.patch_edit_object(body2, user_id)
+    patch_edit_object.check_that_status_code_is_200()
+    patch_edit_object.check_name_field(body1)
+    patch_edit_object.check_data_field(body2)
+
+    patch_edit_object.remove_test_object()
+
+
+
 # # Удаление объекта
-# @pytest.mark.medium
-# def test_delete_an_obj(setup_and_teardown):
-#     # удаление объекта
-#     response = requests.delete(f'http://objapi.course.qa-practice.com/object/{setup_and_teardown}')
-#     assert response.status_code == 200, 'Status code is not 200'
-#
-#     # Проверка того, что объект удалился
-#     query = requests.get(f'http://objapi.course.qa-practice.com/object/{setup_and_teardown}')
-#     assert query.status_code == 404, 'Status code is not 404'
+@pytest.mark.medium
+def test_delete_an_obj(delete_edit_object):
+    body = {"name": "Andrey", "data": {"feature": "value"}}
+    user_id = delete_edit_object.create_test_object(body)
+
+    delete_edit_object.delete_an_obj(user_id)
+    delete_edit_object.check_that_status_code_is_200()
+
+    # # Проверка того, что объект удалился
+    delete_edit_object.check_that_status_code_is_404()
+
