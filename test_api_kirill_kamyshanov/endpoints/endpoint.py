@@ -4,16 +4,16 @@ import requests
 class Endpoint:
     url = 'http://objapi.course.qa-practice.com/object'
     response_body = None
-
+    user_id = None
+    status_code = None
 
     def create_test_object(self, body):
-        response = requests.post(self.url, json=body)
-        self.user_id = response.json()['id']
-        self.response = response
-        self.response_body = response.json()
-        self.status_code = response.status_code
+        self.response = requests.post(self.url, json=body)
+        self.user_id = self.response.json()['id']
+        self.response_body = self.response.json()
+        self.status_code = self.response.status_code
         print(f'\nТестовый юзер: {self.user_id}')
-        print(self.response_body)
+        print(f'Данные тестового юзера: {self.response_body}')
         return self.user_id
 
 

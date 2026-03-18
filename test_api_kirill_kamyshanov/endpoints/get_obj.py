@@ -9,6 +9,6 @@ class GetObj(Endpoint):
         self.user_id = self.response.json()['id']
         self.status_code = self.response.status_code
         self.response_body = self.response.json()
-        print('\n', self.response.json())
+        print(self.response.json())
         print(self.user_id)
         return self.response
