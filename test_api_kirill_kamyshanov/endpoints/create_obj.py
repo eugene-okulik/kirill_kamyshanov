@@ -9,4 +9,3 @@ class CreateObj(Endpoint):
         self.response_body = self.response.json()
         self.status_code = self.response.status_code
         self.user_id = self.response_body['id']
-        return self.response
