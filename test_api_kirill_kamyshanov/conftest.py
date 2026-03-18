@@ -6,6 +6,7 @@ from test_api_kirill_kamyshanov.endpoints.get_obj import GetObj
 from test_api_kirill_kamyshanov.endpoints.put_obj import PutObj
 from test_api_kirill_kamyshanov.endpoints.patch_obj import PatchObj
 
+
 @pytest.fixture(scope='session')
 def session_notifications():
     print("\nStart testing")
@@ -20,22 +21,25 @@ def t_notifications():
     print("\nafter test")
 
 
-
 @pytest.fixture()
 def create_object_endpoint():
     return CreateObj()
+
 
 @pytest.fixture()
 def get_object_endpoint():
     return GetObj()
 
+
 @pytest.fixture()
 def put_edit_object():
     return PutObj()
 
+
 @pytest.fixture()
 def patch_edit_object():
     return PatchObj()
+
 
 @pytest.fixture()
 def delete_edit_object():

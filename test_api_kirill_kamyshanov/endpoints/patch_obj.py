@@ -1,6 +1,7 @@
 import requests
-
+import allure
 from test_api_kirill_kamyshanov.endpoints.endpoint import Endpoint
+
 
 class PatchObj(Endpoint):
 
@@ -9,7 +10,6 @@ class PatchObj(Endpoint):
         self.status_code = response.status_code
         self.response_body = response.json()
 
-        print(self.response_body)
-
+    @allure.step('Check "id" field')
     def check_id_field(self):
         assert self.response_body['id'] == self.user_id, 'ID does not match'

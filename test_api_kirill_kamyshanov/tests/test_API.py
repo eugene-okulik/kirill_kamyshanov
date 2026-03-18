@@ -1,7 +1,6 @@
 import pytest
 
 
-
 def test_get_by_id_obj(get_object_endpoint, session_notifications):
     body1 = {"name": "Andrey", "data": {"feature": "value"}}
     user_id = get_object_endpoint.create_test_object(body1)
@@ -13,7 +12,6 @@ def test_get_by_id_obj(get_object_endpoint, session_notifications):
     get_object_endpoint.check_data_field(body1)
 
     get_object_endpoint.remove_test_object()
-
 
 
 # Создание объектов
@@ -33,7 +31,6 @@ def test_create_obj(create_object_endpoint, body):
     create_object_endpoint.remove_test_object()
 
 
-
 # Изменение объекта с помощью метода PUT
 def test_put_edit_obj(put_edit_object):
     body1 = {"name": "Andrey", "data": {"feature": "value"}}
@@ -49,7 +46,6 @@ def test_put_edit_obj(put_edit_object):
     put_edit_object.check_id_field()
 
     put_edit_object.remove_test_object()
-
 
 
 # Изменение объекта с помощью метода PATCH
@@ -76,7 +72,6 @@ def test_patch_edit_obj(patch_edit_object):
     patch_edit_object.remove_test_object()
 
 
-
 # Удаление объекта
 @pytest.mark.medium
 def test_delete_an_obj(delete_edit_object):
@@ -87,5 +82,4 @@ def test_delete_an_obj(delete_edit_object):
     delete_edit_object.check_that_status_code_is_200()
 
     # Проверка того, что объект удалился
-    delete_edit_object.check_that_status_code_is_404()
-
+    delete_edit_object.check_that_object_is_deleted()
