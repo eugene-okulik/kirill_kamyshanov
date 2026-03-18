@@ -10,7 +10,10 @@ class Endpoint:
         response = requests.post(self.url, json=body)
         self.user_id = response.json()['id']
         self.response = response
+        self.response_body = response.json()
+        self.status_code = response.status_code
         print(f'\nТестовый юзер: {self.user_id}')
+        print(self.response_body)
         return self.user_id
 
 
@@ -27,13 +30,13 @@ class Endpoint:
         assert self.response.status_code == 200, 'status code is not 200'
 
 
-    def check_response_body_fields(self, response_body):
-        assert 'id' in response_body, 'Response body does not have an id'
-        assert 'data' in response_body, 'Response body does not have a data'
-        assert 'name' in response_body, 'Response body does not have a name'
+    def check_response_body_fields(self):
+        assert 'id' in self.response_body, 'Response body does not have an id'
+        assert 'data' in self.response_body, 'Response body does not have a data'
+        assert 'name' in self.response_body, 'Response body does not have a name'
 
-    def check_presence_of_response_body(self, response_body):
-        assert response_body, 'user not found'
+    def check_presence_of_response_body(self):
+        assert self.response_body, 'user not found'
 
 
     def check_name_field(self, body):

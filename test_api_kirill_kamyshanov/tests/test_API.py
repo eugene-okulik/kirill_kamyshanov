@@ -1,16 +1,6 @@
-import requests
 import pytest
-# from test_api_kirill_kamyshanov.endpoints.create_obj.CreateObj import create_obj
 
-# class CreateObj:
-#     url = 'http://objapi.course.qa-practice.com/object'
-#
-#     @pytest.fixture
-#     def create_object(self, body):
-#         response = requests.post(self.url, json=body)
-#         user_id = response.json()['id']
-#         yield response
-#         requests.delete(f'{self.url}/{user_id}')
+
 
 
 # @pytest.fixture
@@ -50,16 +40,14 @@ import pytest
 body1 = {"name": "Andrey", "data": {"feature": "value"}}
 
 # Чистовик
-# def test_get_by_id_obj(create_object_endpoint, get_object_endpoint):
-#     user_id = create_object_endpoint.create_test_object(body1)
-#     # print(user_id) # отладка
-#     resp_body = get_object_endpoint.get_by_id_obj(user_id).json() # пока к json не привожу
-#     # print(resp_body) # отладка
-#     get_object_endpoint.check_that_status_code_is_200()
-#     get_object_endpoint.check_presence_of_response_body(resp_body)
-#     get_object_endpoint.check_response_body_fields(resp_body)
-#
-#     get_object_endpoint.remove_test_object()
+def test_get_by_id_obj(create_object_endpoint, get_object_endpoint):
+    user_id = create_object_endpoint.create_test_object(body1)
+    get_object_endpoint.get_by_id_obj(user_id)
+    get_object_endpoint.check_that_status_code_is_200()
+    get_object_endpoint.check_presence_of_response_body()
+    get_object_endpoint.check_response_body_fields()
+
+    get_object_endpoint.remove_test_object()
 
 
 
@@ -67,52 +55,40 @@ body1 = {"name": "Andrey", "data": {"feature": "value"}}
 
 # чистовик
 # # Создание объектов
-# @pytest.mark.parametrize("body", [
-#     ({"name": "Maria", "data": {"feature": "grape"}}),
-#     ({"name": "Anton", "data": {"feature": "desert"}}),
-#     ({"name": "Nikita", "data": {"feature": "Астерикс и Обеликс против Цезаря"}})
-# ])
-# def test_create_obj(create_object_endpoint, body):
-#     response_body = create_object_endpoint.create_object(body).json()
-#     print(response_body)
-#     create_object_endpoint.check_that_status_code_is_200()
-#     create_object_endpoint.check_presence_of_response_body(response_body)
-#     create_object_endpoint.check_response_body_fields(response_body)
-#     create_object_endpoint.check_name_field(response_body)
-#     create_object_endpoint.check_data_field(response_body)
-#
-#     create_object_endpoint.remove_test_object()
+@pytest.mark.parametrize("body", [
+    ({"name": "Maria", "data": {"feature": "grape"}}),
+    ({"name": "Anton", "data": {"feature": "desert"}}),
+    ({"name": "Nikita", "data": {"feature": "Астерикс и Обеликс против Цезаря"}})
+])
+def test_create_obj(create_object_endpoint, body):
+    response_body = create_object_endpoint.create_object(body).json()
+    print(response_body)
+    create_object_endpoint.check_that_status_code_is_200()
+    create_object_endpoint.check_presence_of_response_body()
+    create_object_endpoint.check_response_body_fields()
+    create_object_endpoint.check_name_field(body)
+    create_object_endpoint.check_data_field(body)
+
+    create_object_endpoint.remove_test_object()
 
 
 
+# Чистовик
+# Изменение объекта с помощью метода PUT
+def test_put_edit_obj(put_edit_object):
+    body_put = {"name": "new_name_put",
+            "data": {"feature": "new_value_put"}
+            }
+    user_id = put_edit_object.create_test_object(body1)
+    response_body = put_edit_object.put_edit_object(body_put, user_id)
+    put_edit_object.check_that_status_code_is_200()
+    put_edit_object.check_response_body_fields()
+    put_edit_object.check_name_field(body_put)
+    put_edit_object.check_data_field(body_put)
+    put_edit_object.check_id_field()
+    put_edit_object.remove_test_object()
 
-
-
-
-
-
-
-
-
-
-
-#
-# # Изменение объекта с помощью метода PUT
-# def test_put_edit_obj(setup_and_teardown):
-#     body = {"name": "new_name_put",
-#             "data": {"feature": "new_value_put"}
-#             }
-#     response = requests.put(f'http://objapi.course.qa-practice.com/object/{setup_and_teardown}', json=body)
-#     response_body = response.json()
-#     print(response_body)
-#     assert response.status_code == 200, 'Status code is not 200'
-#     assert 'id' in response_body, 'Response body does not have an id'
-#     assert 'name' in response_body, 'Response body does not have a name'
-#     assert 'data' in response_body, 'Response body does not have a data'
-#     assert int(response_body['id']) == setup_and_teardown, 'ID does not match'
-#     assert response_body['name'] == body['name'], 'Name does not match'
-#     assert response_body['data'] == body['data'], 'Feature does not match'
-#
+# #
 #
 # # Изменение объекта с помощью метода PATCH
 # @pytest.mark.critical
