@@ -14,4 +14,4 @@ class PutObj(Endpoint):
     # Здесь отдельный метод, т.к. в методе PUT id приходит в строковом формате
     @allure.step('Check "id" field')
     def check_id_field(self):
-        assert type(int(self.user_id)) == int, f'type ID is not correct'
+        assert type(int(self.user_id)) == int, 'type ID is not correct'
