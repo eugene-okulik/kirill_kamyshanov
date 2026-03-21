@@ -5,6 +5,15 @@ from test_api_kirill_kamyshanov.endpoints.endpoint import Endpoint
 
 
 class DeleteObj(Endpoint):
+
+    # Переопределил метод для создания объекта, т.к. фикстура с созданием и удалением неприменима
+    @allure.step('Create an object')
+    def create_test_object(self):
+        body = {"name": "Andrey", "data": {"feature": "value"}}
+        self.response = requests.post(self.url, json=body)
+        self.user_id = self.response.json()['id']
+
+    @allure.step('Delete an object')
     def delete_an_obj(self):
         requests.delete(f'{self.url}/{self.user_id}')
 
