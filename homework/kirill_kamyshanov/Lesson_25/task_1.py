@@ -11,8 +11,15 @@ def driver():
 
 
 def test_task_1(driver):
+    target_field = ('xpath', '//input[@placeholder="Submit me"]')
+    target_result = ('css selector', '.result-text')
+
     driver.get("https://www.qa-practice.com/elements/input/simple")
-    time.sleep(3)
+    text_field = driver.find_element(*target_field)
+    text_field.send_keys("I_like_borsh")
+    text_field.submit()
+    actual_text = driver.find_element(*target_result).text
+    print(actual_text)
 
 
 # Задание 1
