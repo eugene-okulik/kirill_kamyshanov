@@ -13,7 +13,6 @@ class CategoryPage(BasePage):
         good_in_category_page = self.find(category_page_locators.good_in_category_page_loc)
         expect(good_in_category_page, "На странице категории не отображено ни одного товара").not_to_have_count(0)
 
-        # self.page.wait_for_timeout(500)
         expect(self.find(category_page_locators.search_field_loc)).to_be_visible()
         expect(self.find(category_page_locators.search_button_loc)).to_be_visible()
         expect(self.find(category_page_locators.filter_by_material_block_loc)).to_be_visible()
@@ -50,7 +49,8 @@ class CategoryPage(BasePage):
         # Ожидаемый порядок
         reverse = text == "Price - High to Low"
         expected_sequence = sorted(sequence_after, reverse=reverse)
-        assert sequence_after == expected_sequence, f"Сортировка прошла некорректно. Ожидалось: {expected_sequence}, Получено: {sequence_after}"
+        assert sequence_after == expected_sequence, \
+            f"Сортировка прошла некорректно. Ожидалось: {expected_sequence}, Получено: {sequence_after}"
 
     def search_by_keyword(self, search_word: str):
         """Поиск товаров по ключевому слову"""

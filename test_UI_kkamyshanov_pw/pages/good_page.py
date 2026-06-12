@@ -44,7 +44,7 @@ class GoodPage(BasePage):
 
         add_button = self.find(good_page_locators.add_to_cart_from_good_page_loc)
         add_button.click()
-        expect(self.find(count_goods_in_card)).not_to_be_empty()
+        expect(self.find(count_goods_in_card)).to_be_visible()
 
     def assert_goods_was_added_in_card(self, expected_count: int):
         """Проверка добавления товара в корзину со страницы товара"""
