@@ -1,7 +1,7 @@
 Задание 1, часть 2
 Go to first line in file: g  <  ESC-<
 Go to last line in file: G  >  ESC->
-Forward one window: f  ^F  ^V  SPACE
+Forward one window: z (на моей убунте: f  ^F  ^V  SPACE)
 Forward one line: e  ^E  j  ^N  CR
 Backward one line: y  ^Y  k  ^K  ^P
 Search forward for matching line: /pattern
@@ -15,7 +15,7 @@ Repeat previous search in reverse direction: N
 Типы файлов:
 /dev/null Символьные устройства (character special file)
 /dev/zero Символьные устройства (character special file)
-/dev/sda Блочные устройства (block special file)
+/dev/sda нет такого файла. На моей убунте: Блочные устройства (block special file)
 /dev/tty Символьные устройства (character special file)
 /root Директория (directory)
 /etc/passwd Обычный файл (regular file)
